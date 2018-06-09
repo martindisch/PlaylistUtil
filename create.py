@@ -8,6 +8,8 @@ def write_playlist(directory):
     dir = os.path.basename(os.path.normpath(directory))
     # Create relative paths using the directory name and file names
     songs = ["{}/{}".format(dir, f) for f in os.listdir(directory)]
+    # Sort songs alphabetically
+    songs.sort()
     # Write paths to file
     with open("{}.m3u8".format(dir), 'w') as f:
         f.write('\n'.join(songs))
