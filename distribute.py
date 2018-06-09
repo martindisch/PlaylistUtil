@@ -1,13 +1,14 @@
 #!/usr/bin/python3
 import sys
+import os
 import re
 
 
 def get_songs(filename):
-    # Infer directory name from filename
-    directory = filename.split('.')[0]
     # Pattern for matching only filenames from paths
     pattern = re.compile(r"(?:\\|\/)?([^\n\r\.\\\/]+\..+)")
+    # Infer directory name from filename
+    directory = os.path.splitext(pattern.search(filename).group(1))[0]
     # Read file and build songs using pattern for lines that aren't comments
     with open(filename, 'r') as rf:
         songs = [
