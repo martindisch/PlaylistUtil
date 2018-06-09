@@ -1,4 +1,12 @@
 #!/usr/bin/python3
+"""This module can be used to create one playlist out of several others by
+evenly distributing the songs while keeping their order. Use as
+
+./distribute.py /path/to/list1.m3u8 /path/to/list2.m3u8
+
+This will create a file `distributed.m3u8` in the working directory.
+
+"""
 import sys
 import os
 import re
@@ -6,6 +14,20 @@ from urllib.parse import unquote
 
 
 def get_songs(filename):
+    """Return relative paths for files from playlist.
+
+    Parameters
+    ----------
+    filename : str
+        The path to the playlist file
+
+    Returns
+    -------
+    list
+        The list of songs from the playlist as relative paths with the
+        playlist name prefixed as directory. For a file `Classics.m3u8` you'd
+        get ["Classics/First.mp3", "Classics/Second.mp3"].
+    """
     # Pattern for matching only filenames from paths
     pattern = re.compile(r"(?:\\|\/)?([^\n\r\.\\\/]+\..+)")
     # Infer directory name from filename
@@ -22,6 +44,22 @@ def get_songs(filename):
 
 
 def get_distributed(songs):
+    """Return an evenly mixed list of songs from several lists.
+
+    For three playlists, it will start with the first song from the first list,
+    followed by the one from the second and the third. Then it will continue
+    with the second song from the first, second and third list, and so on.
+
+    Parameters
+    ----------
+    songs : list
+        The list of lists containing the songs
+
+    Returns
+    -------
+    list
+        The list of all combined songs
+    """
     # Get total number of songs
     total_songs = sum(len(sublist) for sublist in songs)
     distributed = []
