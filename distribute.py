@@ -26,6 +26,7 @@ def get_songs(filename):
         The list of songs from the playlist as relative paths with the
         playlist name prefixed as directory. For a file `Classics.m3u8` you'd
         get ["Classics/First.mp3", "Classics/Second.mp3"].
+
     """
     # Pattern for matching only filenames from paths
     pattern = re.compile(r"(?:\\|\/)?([^\n\r\.\\\/]+\..+)")
@@ -58,6 +59,7 @@ def get_distributed(songs):
     -------
     list
         The list of all combined songs
+
     """
     # Get total number of songs
     total_songs = sum(len(sublist) for sublist in songs)

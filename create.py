@@ -27,6 +27,7 @@ def conditional_quote(name):
     -------
     str
         The filename, urlencoded if necessary, the same otherwise.
+
     """
     if "[" in name or "]" in name:
         return quote(name)
@@ -47,6 +48,7 @@ def write_playlist(directory):
     ----------
     directory : str
         The path to the directory containing the files
+
     """
     # Use directory name as playlist name
     dir = os.path.basename(os.path.normpath(directory))
