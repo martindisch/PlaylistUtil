@@ -10,6 +10,28 @@ directory.
 """
 import sys
 import os
+from urllib.parse import quote
+
+
+def conditional_quote(name):
+    """Urlencode the name if it contains a square bracket.
+
+    Because VLC can't handle it otherwise.
+
+    Parameters
+    ----------
+    name : str
+        The filename
+
+    Returns
+    -------
+    str
+        The filename, urlencoded if necessary, the same otherwise.
+    """
+    if "[" in name or "]" in name:
+        return quote(name)
+    else:
+        return name
 
 
 def write_playlist(directory):
@@ -29,7 +51,10 @@ def write_playlist(directory):
     # Use directory name as playlist name
     dir = os.path.basename(os.path.normpath(directory))
     # Create relative paths using the directory name and file names
-    songs = ["{}/{}".format(dir, f) for f in os.listdir(directory)]
+    songs = [
+        conditional_quote("{}/{}".format(dir, f))
+        for f in os.listdir(directory)
+    ]
     # Sort songs alphabetically
     songs.sort()
     # Write paths to file

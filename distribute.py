@@ -10,7 +10,6 @@ This will create a file `distributed.m3u8` in the working directory.
 import sys
 import os
 import re
-from urllib.parse import unquote
 
 
 def get_songs(filename):
@@ -35,7 +34,7 @@ def get_songs(filename):
     # Read file and build songs using pattern for lines that aren't comments
     with open(filename, 'r') as rf:
         songs = [
-            directory + '/' + unquote(match.group(1)) for match in (
+            directory + '/' + match.group(1) for match in (
                 pattern.search(line) for line in rf.readlines() if
                 line[0] != "#"
             ) if match
